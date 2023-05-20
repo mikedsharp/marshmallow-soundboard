@@ -6,7 +6,6 @@ const io = new Server(3000, {
   },
 });
 console.log("listening on port 3000");
-debugger;
 io.on("connection", (socket) => {
   socket.emit("get-sounds", [
     {
