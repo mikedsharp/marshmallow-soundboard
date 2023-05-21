@@ -12,7 +12,7 @@
   "author": "Mike D Sharp",
   "license": "MIT",
   "devDependencies": {
-    "@tsconfig/node20": "^1.0.1",
+    "@tsconfig/node16": "^1.0.4",
     "@types/node": "^20.2.1",
     "@typescript-eslint/eslint-plugin": "^5.59.6",
     "@typescript-eslint/parser": "^5.59.6",
@@ -21,6 +21,5 @@
     "sound-play": "^1.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
-  },
-  "dependencies": {}
+  }
 }
