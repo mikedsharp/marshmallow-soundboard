@@ -6,10 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --fix",
-    "start": "ts-node src/main.ts"
+    "start": "ts-node src/main.ts",
+    "build-manifest": "ts-node src/build-manifest.ts"
   },
   "author": "Mike D Sharp",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@tsconfig/node20": "^1.0.1",
     "@types/node": "^20.2.1",
@@ -17,7 +18,9 @@
     "@typescript-eslint/parser": "^5.59.6",
     "eslint": "^8.41.0",
     "socket.io": "^4.6.1",
+    "sound-play": "^1.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
-  }
+  },
+  "dependencies": {}
 }
