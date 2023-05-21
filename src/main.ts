@@ -129,4 +129,7 @@ io.on("connection", (socket) => {
       color: "#0f0",
     },
   ]);
+  socket.on("play-sound", (sound) => {
+    console.log("play requested sound:", JSON.parse(sound));
+  });
 });
