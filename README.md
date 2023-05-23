@@ -44,8 +44,8 @@ The `soundboard-listener` will begin running and will keep running until you ter
 
 In the console, you will see a message printed out telling you to copy the environment variable on the screen, the environment variable will be in the format shown below:
 
-VITE_SOUND_SERVER_ADDRESS=http://<YOUR LOCAL NETWORK IP ADDRESS>:3000
+`VITE_SOUND_SERVER_ADDRESS=http://<YOUR LOCAL NETWORK IP ADDRESS>:3000`
 
-Now you have that URL good and ready, please follow the instructions for getting the `soundboard-client` up and running. You can find the `soundboard-client` at `https://github.com/programmerinprogress/soundboard-client`
+Now you have that URL good and ready, please follow the instructions for getting the `soundboard-client` up and running. You can find the `soundboard-client` at https://github.com/programmerinprogress/soundboard-client
 
 When you have the client and the listener all setup, have a great time using the soundboard!
