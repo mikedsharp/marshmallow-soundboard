@@ -42,11 +42,9 @@ To run the app, run the following command in your terminal at the project root (
 
 The `soundboard-listener` will begin running and will keep running until you terminate the process in the terminal (usually you would do Ctrl+C to do this if you haven't before)
 
-You will now need to make a note of the IP of your computer on your local network and build a URL in the following format.
+In the console, you will see a message printed out telling you to copy the environment variable on the screen, the environment variable will be in the format shown below:
 
-`http://<YOUR LOCAL NETWORK IP>:3000`
-
-Replace `<YOUR LOCAL NETWORK IP>` with your actual IP, something along the lines of `192.168.10.255`, but the last two numbers will be something different to that for your own machine.
+VITE_SOUND_SERVER_ADDRESS=http://<YOUR LOCAL NETWORK IP ADDRESS>:3000
 
 Now you have that URL good and ready, please follow the instructions for getting the `soundboard-client` up and running. You can find the `soundboard-client` at https://github.com/programmerinprogress/soundboard-client
 
