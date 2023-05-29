@@ -1,3 +1,5 @@
+declare var serverAddress: any;
+
 import { io } from "socket.io-client";
 let socket: any = null;
 export function init() {
@@ -5,8 +7,16 @@ export function init() {
   if (socket !== null) {
     return socket;
   }
-  // @ts-ignore
-  socket = io(serverAddress || import.meta.env.VITE_SOUND_SERVER_ADDRESS);
+
+  try {
+    if (serverAddress) {
+      socket = io(serverAddress);
+    } else {
+      socket = io(import.meta.env.VITE_SOUND_SERVER_ADDRESS);
+    }
+  } catch (ex) {
+    socket = io(import.meta.env.VITE_SOUND_SERVER_ADDRESS);
+  }
 
   socket.on("get-sounds", (sounds: any) => {
     localStorage.setItem("sounds", JSON.stringify(sounds));
