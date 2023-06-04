@@ -6,6 +6,6 @@
     "allowSyntheticDefaultImports": true,
     "types": ["./index.d.ts"]
   },
-  "include": ["src", "node_modules/speaker"],
+  "include": ["src", "node"],
   "exclude": ["node_modules"]
 }
