@@ -27,23 +27,34 @@ io.on("connection", (socket) => {
   });
 });
 
-fs.writeFileSync(
-  path.join(__dirname, "../../soundboard-client/dist/server-address.js"),
-  `
-      var serverAddress = 'http://${ip.address()}:3000';
-  `
-);
-
-app.use(
-  express.static(path.join(__dirname, "../../soundboard-client/dist"), {
-    port: 5000,
-  })
-);
-
-app.get("*", function (request: any, response: any) {
-  response.sendFile(
-    path.join(__dirname, "../../soundboard-client/dist/index.html")
+if (
+  fs.existsSync(path.join(__dirname, "../../soundboard-client/dist/index.html"))
+) {
+  console.log(
+    "Soundboard client build exists, attempting to host on port 3000..."
   );
-});
-app.listen(5000);
-console.log(`soundboard client is hosted at: http://${ip.address()}:5000`);
+  fs.writeFileSync(
+    path.join(__dirname, "../../soundboard-client/dist/server-address.js"),
+    `
+        var serverAddress = 'http://${ip.address()}:3000';
+    `
+  );
+
+  app.use(
+    express.static(path.join(__dirname, "../../soundboard-client/dist"), {
+      port: 5000,
+    })
+  );
+
+  app.get("*", function (request: any, response: any) {
+    response.sendFile(
+      path.join(__dirname, "../../soundboard-client/dist/index.html")
+    );
+  });
+  app.listen(5000);
+  console.log(`soundboard client is hosted at: http://${ip.address()}:5000`);
+} else {
+  console.log(
+    `No build of soundboard client found, please run soundboard-client separately (adding VITE_SOUND_SERVER_ADDRESS=http://${ip.address()}:5000 to the clients .env file)  or run a build restart this process.`
+  );
+}
