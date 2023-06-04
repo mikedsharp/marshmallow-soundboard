@@ -11,9 +11,14 @@ const sound = require("sound-play");
 
 const io = new Server(3000, {
   cors: {
-    origin: "*",
+    origin: [
+      `http://${ip.address()}:${clientPort}`,
+      `http://localhost:${clientPort}`,
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
   },
 });
+
 console.log(`soundboard listener is listening on port ${serverPort}`);
 
 io.on("connection", (socket) => {
