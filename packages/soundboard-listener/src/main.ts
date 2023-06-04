@@ -42,7 +42,7 @@ if (
   fs.writeFileSync(
     path.join(__dirname, "../../soundboard-client/dist/server-address.js"),
     `
-        var serverAddress = 'http://${ip.address()}:${serverPort}';
+        var serverAddress = 'ws://${ip.address()}:${serverPort}';
     `
   );
 
