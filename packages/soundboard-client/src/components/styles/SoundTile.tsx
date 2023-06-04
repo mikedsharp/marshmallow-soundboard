@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const StyledSoundTile = styled.div`
   background-color: ${({ color }) => color};
   display: flex;
-  height: calc(20.33vh);
+  height: 150px;
+  box-sizing: border-box;
   aspect-ratio: 1/1;
   align-items: center;
   justify-content: center;
