@@ -5,7 +5,13 @@ console.log("building manifest...");
 
 const soundEntries: { name: any; label: any; color: string }[] = [];
 
-fs.readdirSync(path.join(__dirname, `../media/`)).forEach((file: any) => {
+
+// pkg gets your working directory wrong if you use process.cwd() when the app is compiled, so let's test for the bad directory name and use
+// an alternative if we get a positive result.
+const directory = __dirname.indexOf('/snapshot') > -1 ? process.execPath : __dirname;
+
+
+fs.readdirSync(path.join(directory, `../media/`)).forEach((file: any) => {
   if (file.indexOf(".mp3") > -1) {
     soundEntries.push({
       name: file.split(".")[0],
@@ -16,7 +22,7 @@ fs.readdirSync(path.join(__dirname, `../media/`)).forEach((file: any) => {
 });
 console.log(JSON.stringify({ sounds: soundEntries }));
 fs.writeFileSync(
-  path.join(__dirname, `../media/sound-manifest.json`),
+  path.join(directory, `../media/sound-manifest.json`),
   JSON.stringify({ sounds: soundEntries })
 );
 console.log(

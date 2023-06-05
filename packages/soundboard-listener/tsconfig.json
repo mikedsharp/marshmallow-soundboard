@@ -4,8 +4,8 @@
     "outDir": "dist",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["./index.d.ts"]
+    "types": ["./index.d.ts", "node"]
   },
-  "include": ["src", "node"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

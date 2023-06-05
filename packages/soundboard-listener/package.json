@@ -10,7 +10,8 @@
     "build-manifest": "ts-node src/build-manifest.ts",
     "build-server:windows": "tsc src/main.ts --outDir dist && nexe dist/main.js -t 16.0.0 -o soundboard-listener.exe --build --verbose",
     "build-server:mac": "tsc src/main.ts --outDir dist && pkg dist/main.js  -o soundboard-listener",
-    "build-manifest-builder:windows": "tsc src/build-manifest.ts --outDir dist && nexe dist/build-manifest.js -t 16.0.0"
+    "build-manifest-builder:windows": "tsc src/build-manifest.ts --outDir dist && nexe dist/build-manifest.js -t 16.0.0",
+    "build-manifest-builder:mac": "tsc src/build-manifest.ts --outDir dist && pkg dist/build-manifest.js  -o build-manifest"
   },
   "author": "Mike D Sharp",
   "license": "MIT",
