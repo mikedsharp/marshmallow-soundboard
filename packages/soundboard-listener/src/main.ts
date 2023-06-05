@@ -34,8 +34,6 @@ io.on("connection", (socket) => {
   });
 });
 
-console.log(path.join(directory, "../../soundboard-client/dist/server-address.js"));
-
 if (
   fs.existsSync(path.join(directory, "../../soundboard-client/dist/index.html"))
 ) {
