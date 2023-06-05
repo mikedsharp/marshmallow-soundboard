@@ -9,7 +9,8 @@
     "start": "ts-node src/main.ts",
     "build-manifest": "ts-node src/build-manifest.ts",
     "build-server:windows": "tsc src/main.ts --outDir dist && nexe dist/main.js -t 16.0.0 -o soundboard-listener.exe --build --verbose",
-    "build-manifest-builder:windows": "tsc src/build-manifest.ts --outDir dist && nexe dist/build-manifest.js -t 16.0.0 -o build-manifest.exe --build --verbose"
+    "build-server:mac": "tsc src/main.ts --outDir dist && pkg dist/main.js  -o soundboard-listener",
+    "build-manifest-builder:windows": "tsc src/build-manifest.ts --outDir dist && nexe dist/build-manifest.js -t 16.0.0"
   },
   "author": "Mike D Sharp",
   "license": "MIT",
@@ -23,9 +24,10 @@
     "express": "^4.18.2",
     "ip": "^1.1.8",
     "nexe": "^4.0.0-rc.2",
+    "pkg": "^5.8.1",
     "socket.io": "^4.6.1",
+    "sound-play": "^1.1.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.4",
-    "sound-play": "^1.1.0"
+    "typescript": "^5.0.4"
   }
 }
