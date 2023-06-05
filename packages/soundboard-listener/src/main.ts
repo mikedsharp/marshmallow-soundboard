@@ -59,6 +59,6 @@ if (
   );
 } else {
   console.log(
-    `No build of soundboard client found, please run soundboard-client separately (adding VITE_SOUND_SERVER_ADDRESS=http://${ip.address()}:${clientPort} to the clients .env file)  or run a build and then restart this process.`
+    `No build of soundboard client found, please run soundboard-client separately (adding VITE_SOUND_SERVER_ADDRESS=http://${ip.address()}:${serverPort} to the clients .env file)  or run a build and then restart this process.`
   );
 }
