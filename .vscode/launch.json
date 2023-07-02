@@ -5,9 +5,9 @@
       "name": "Debug main.ts",
       "type": "node",
       "request": "launch",
-      "cwd": "${workspaceRoot}",
+      "cwd": "${workspaceRoot}/packages/soundboard-listener",
       "runtimeArgs": ["-r", "ts-node/register"],
-      "args": ["${workspaceRoot}/src/main.ts"]
+      "args": ["${workspaceRoot}/packages/soundboard-listener/src/main.ts"]
     }
   ]
 }
