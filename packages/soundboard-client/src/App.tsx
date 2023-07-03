@@ -1,6 +1,6 @@
 import SoundBoardGrid from "./components/SoundBoardGrid";
 import {StyledApp} from './components/styles/App';
-import { useState, useLayoutEffect, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 
 function useGridSize() {
