@@ -1,6 +1,5 @@
 import SoundTile from "./SoundTile";
 import { StyledSoundBoardGrid } from "./styles/SoundBoardGrid";
-import { playSound } from "../services/ListenerConnection";
 import { useState, useLayoutEffect, useRef } from "react";
 
 function useGridSize() {
@@ -18,9 +17,10 @@ function useGridSize() {
   return size;
 }
 
-function SoundBoardGrid(props: { sounds: any[] }) {
+function SoundBoardGrid(props: { sounds: any[], onPlaySound:Function }) {
+  const {sounds, onPlaySound} = props;
   function tileClicked(tile: any) {
-    playSound(tile);
+    onPlaySound(tile);
   }
 
   const gridElement: any = useRef();
@@ -31,7 +31,7 @@ function SoundBoardGrid(props: { sounds: any[] }) {
 
   const maxTotalTiles: number = maxTilesAcross * maxTilesDown;
 
-  const page = props.sounds.slice(0, maxTotalTiles);
+  const page = sounds.slice(0, maxTotalTiles);
 
   return (
     <>
