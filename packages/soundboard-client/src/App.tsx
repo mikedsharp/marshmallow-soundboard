@@ -1,6 +1,7 @@
-import SoundBoardGrid from "./components/SoundBoardGrid";
-import {StyledApp} from './components/styles/App';
 import { useState, useEffect } from "react";
+import { socket } from './socket';
+import SoundBoardGrid from "./components/SoundBoardGrid";
+import { StyledApp } from './components/styles/App';
 
 
 function useGridSize() {
@@ -19,16 +20,25 @@ function useGridSize() {
 }
 
 function App() {
-  const soundString: string = localStorage.getItem("sounds") || "";
-  const sounds = JSON.parse(soundString);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
- 
+  const [sounds, setSounds] = useState<any[]>([]);
+
+  function onGetSounds(newSounds: any[]) {
+    setSounds(newSounds);
+  }
+
+  useEffect(() => {
+    socket.on('get-sounds', onGetSounds);
+    return () => {
+      socket.off('get-sounds');
+    }
+  })
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       setCurrentPageIndex(0);
     }, false);
   }, []);
-  
 
 
   const [width, height] = useGridSize();
@@ -38,14 +48,16 @@ function App() {
 
   const maxTotalTiles: number = maxTilesAcross * maxTilesDown;
 
-  const startTileIndex:number = maxTotalTiles * currentPageIndex;
+  const startTileIndex: number = maxTotalTiles * currentPageIndex;
 
-  const totalPageCount:number = Math.ceil(sounds.length/(maxTilesAcross * maxTilesDown));
+  const totalPageCount: number = Math.ceil(sounds.length / (maxTilesAcross * maxTilesDown));
   const page = sounds.slice(startTileIndex, startTileIndex + maxTotalTiles);
-  
+
   return <>
     <StyledApp>
-      <SoundBoardGrid sounds={page} />;
+      <SoundBoardGrid sounds={page} onPlaySound={(sound: any) => {
+        socket.emit('play-sound', JSON.stringify(sound));
+      }} />
       <div>
         <span>{currentPageIndex}</span>
         <button disabled={currentPageIndex === 0} onClick={() => setCurrentPageIndex(currentPageIndex - 1)} type="button">Previous page</button>

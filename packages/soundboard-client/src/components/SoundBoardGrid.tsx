@@ -1,16 +1,16 @@
 import SoundTile from "./SoundTile";
 import { StyledSoundBoardGrid } from "./styles/SoundBoardGrid";
-import { playSound } from "../services/ListenerConnection";
 
-function SoundBoardGrid(props: {sounds: any[] }) {
+function SoundBoardGrid(props: { sounds: any[], onPlaySound: Function }) {
+  const { sounds, onPlaySound } = props;
   function tileClicked(tile: any) {
-    playSound(tile);
+    onPlaySound(tile);
   }
 
   return (
     <>
       <StyledSoundBoardGrid>
-        {props.sounds.map((sound) => {
+        {sounds.map((sound) => {
           return (
             <SoundTile
               key={Math.random()}
