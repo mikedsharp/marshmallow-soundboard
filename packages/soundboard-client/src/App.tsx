@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import { socket } from './socket';
+import { useState, useEffect, useCallback } from "react";
+import { socket } from "./socket";
 import SoundBoardGrid from "./components/SoundBoardGrid";
-import { StyledApp } from './components/styles/App';
-
+import { StyledApp } from "./components/styles/App";
 
 function useGridSize() {
   const [size, setSize] = useState([0, 0]);
@@ -28,18 +27,22 @@ function App() {
   }
 
   useEffect(() => {
-    socket.on('get-sounds', onGetSounds);
+    socket.on("get-sounds", onGetSounds);
     return () => {
-      socket.off('get-sounds');
-    }
-  })
+      socket.off("get-sounds");
+    };
+  });
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
+    const listenerFn = () => {
       setCurrentPageIndex(0);
-    }, false);
-  }, []);
+    };
+    window.addEventListener("resize", listenerFn, false);
 
+    return () => {
+      window.removeEventListener("resize", listenerFn);
+    };
+  }, []);
 
   const [width, height] = useGridSize();
 
@@ -50,21 +53,39 @@ function App() {
 
   const startTileIndex: number = maxTotalTiles * currentPageIndex;
 
-  const totalPageCount: number = Math.ceil(sounds.length / (maxTilesAcross * maxTilesDown));
+  const totalPageCount: number = Math.ceil(
+    sounds.length / (maxTilesAcross * maxTilesDown)
+  );
   const page = sounds.slice(startTileIndex, startTileIndex + maxTotalTiles);
 
-  return <>
-    <StyledApp>
-      <SoundBoardGrid sounds={page} onPlaySound={(sound: any) => {
-        socket.emit('play-sound', JSON.stringify(sound));
-      }} />
-      <div>
-        <span>{currentPageIndex}</span>
-        <button disabled={currentPageIndex === 0} onClick={() => setCurrentPageIndex(currentPageIndex - 1)} type="button">Previous page</button>
-        <button disabled={currentPageIndex === totalPageCount - 1} onClick={() => setCurrentPageIndex(currentPageIndex + 1)} type="button">Next page</button>
-      </div>
-    </StyledApp>
-  </>
+  return (
+    <>
+      <StyledApp>
+        <SoundBoardGrid
+          sounds={page}
+          onPlaySound={useCallback((sound: any) => {
+            socket.emit("play-sound", JSON.stringify(sound));
+          }, [])}
+        />
+        <div>
+          <button
+            disabled={currentPageIndex === 0}
+            onClick={() => setCurrentPageIndex(currentPageIndex - 1)}
+            type="button"
+          >
+            Previous page
+          </button>
+          <button
+            disabled={currentPageIndex === totalPageCount - 1}
+            onClick={() => setCurrentPageIndex(currentPageIndex + 1)}
+            type="button"
+          >
+            Next page
+          </button>
+        </div>
+      </StyledApp>
+    </>
+  );
 }
 
 export default App;
