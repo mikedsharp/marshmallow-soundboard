@@ -1,0 +1,16 @@
+{
+  "name": "soundboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "build:windows": "npm run build:project-root --workspace=soundboard-client && npm run build-server:windows --workspace=soundboard-listener && npm run build-manifest-builder:windows --workspace=soundboard-listener && xcopy /e/h/y/q \"packages/soundboard-listener/media\" \"./dist/media\\\" > nul 2>&1 ",
+    "build:mac": "npm run build:project-root --workspace=soundboard-client && npm run build-server:mac --workspace=soundboard-listener && npm run build-manifest-builder:mac --workspace=soundboard-listener mv ./packages/soundboard-listener/media ./dist/media"
+  },
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/soundboard-client",
+    "packages/soundboard-listener"
+  ]
+}

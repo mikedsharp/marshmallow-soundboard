@@ -1,2 +1,4 @@
 packages/soundboard-listener/soundboard-listener
 packages/soundboard-listener/build-manifest
+node_modules
+dist
