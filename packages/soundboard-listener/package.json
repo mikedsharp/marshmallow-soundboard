@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --fix",
+    "start-and-build-client": "npm run build --workspace=soundboard-client && npm start",
     "start": "ts-node src/main.ts",
     "build-manifest": "ts-node src/build-manifest.ts",
     "build-server:windows": "tsc src/main.ts --outDir dist && pkg dist/main.js -o ../../dist/soundboard-listener.exe",
