@@ -12,7 +12,7 @@
     "build-server:windows": "tsc src/main.ts --outDir dist && pkg dist/main.js -o ../../dist/soundboard-listener.exe",
     "build-server:mac": "tsc src/main.ts --outDir dist && pkg dist/main.js  -o ../../dist/soundboard-listener",
     "build-manifest-builder:windows": "tsc src/build-manifest.ts --outDir dist && pkg dist/build-manifest.js  -o ../../dist/build-manifest.exe",
-    "build-manifest-builder:mac": "tsc src/build-manifest.ts --outDir dist && pkg dist/build-manifest.js  -o build-manifest"
+    "build-manifest-builder:mac": "tsc src/build-manifest.ts --outDir dist && pkg dist/build-manifest.js  -o ../../dist/build-manifest"
   },
   "author": "Mike D Sharp",
   "license": "MIT",
