@@ -7,6 +7,12 @@ const soundEntries: { name: any; label: any; color: string }[] = [];
 
 const directory = process.cwd();
 
+if(!fs.existsSync(path.join(directory, `/media/sound-manifest.json`))) {
+  fs.writeFileSync(path.join(directory, `/media/sound-manifest.json`), JSON.stringify({
+    sounds: []
+  }));
+}
+
 fs.readdirSync(path.join(directory, `/media/`)).forEach((file: any) => {
   if (file.indexOf(".mp3") > -1) {
     soundEntries.push({
