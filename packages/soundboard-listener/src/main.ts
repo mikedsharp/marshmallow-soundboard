@@ -1,5 +1,6 @@
 declare var process: { pkg: { [key: string]: string }; cwd: any };
 const express = require("express");
+const symphonia = require('@tropicbliss/symphonia')
 const app = express();
 const serverPort: number = 3000;
 const clientPort: number = 5001;
@@ -8,7 +9,6 @@ import { Server } from "socket.io";
 var ip = require("ip");
 const fs = require("fs");
 const path = require("path");
-const sound = require("sound-play");
 
 let clientDirectory: string = "";
 
@@ -39,7 +39,8 @@ io.on("connection", (socket) => {
   socket.on("play-sound", async (requestedSound) => {
     const soundObject = JSON.parse(requestedSound);
     const filePath = path.join(directory, `/media/${soundObject.name}.mp3`);
-    sound.play(filePath);
+    const buf = fs.readFileSync(filePath) // Gets a Buffer
+    symphonia.playFromBuf(buf, { speed: 1.0, volume: 1.0, isBlocking: false })
   });
 });
 
