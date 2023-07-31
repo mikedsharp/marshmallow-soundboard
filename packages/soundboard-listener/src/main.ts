@@ -4,10 +4,12 @@ const symphonia = require('@tropicbliss/symphonia')
 const app = express();
 const serverPort: number = 3000;
 const clientPort: number = 5001;
+const soundCache: any = {};
 
 import { Server } from "socket.io";
 var ip = require("ip");
-const fs = require("fs");
+const fs = require('fs');
+const fsPromises = require('node:fs/promises');
 const path = require("path");
 
 let clientDirectory: string = "";
@@ -20,6 +22,17 @@ if (process.pkg) {
 } else {
   // runtime is not compiled with pkg
   clientDirectory = "../soundboard-client/dist";
+}
+
+
+function populateSoundCache(sounds:any) {
+  for(let sound of sounds) {
+    const filePath = path.join(directory, `/media/${sound.name}.mp3`);
+    fsPromises.readFile(filePath)
+      .then((file: any) => {
+        soundCache[sound.name] = file;
+      })
+  }
 }
 
 const io = new Server(serverPort, {
@@ -35,11 +48,19 @@ io.on("connection", (socket) => {
   const soundManifest = JSON.parse(
     fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
   );
+  populateSoundCache(soundManifest.sounds);
   socket.emit("get-sounds", soundManifest.sounds);
   socket.on("play-sound", async (requestedSound) => {
     const soundObject = JSON.parse(requestedSound);
     const filePath = path.join(directory, `/media/${soundObject.name}.mp3`);
-    const buf = fs.readFileSync(filePath) // Gets a Buffer
+
+    let buf = null;
+
+    if(soundCache[soundObject.name]) {
+      buf = soundCache[soundObject.name];
+    } else {
+      buf = fs.readFileSync(filePath) // Gets a Buffer
+    }
     symphonia.playFromBuf(buf, { speed: 1.0, volume: 1.0, isBlocking: false })
   });
 });
