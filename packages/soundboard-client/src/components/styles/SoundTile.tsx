@@ -8,7 +8,9 @@ export const StyledSoundTile = styled.div`
   aspect-ratio: 1/1;
   align-items: center;
   justify-content: center;
+  border-radius: 6%;
   transition: all 0.3s ease;
+  box-shadow: 0 9px #999;
   filter: contrast(70%);
   cursor: pointer;
 
@@ -19,14 +21,9 @@ export const StyledSoundTile = styled.div`
     user-select: none;
   }
 
-  &:hover {
-    filter: contrast(85%);
-  }
-
   &:active {
-    filter: contrast(100%);
-    span {
-      transform: scale(2);
-    }
+    filter: brightness(55%);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
   }
 `;
