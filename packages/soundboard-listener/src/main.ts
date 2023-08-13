@@ -1,18 +1,25 @@
-declare var process: { pkg: { [key: string]: string }; cwd: any };
+import { Server } from "socket.io";
+import { SoundCache } from "./SoundCache";
+
+const ip = require("ip");
+const fs = require('fs');
+const path = require("path");
 const express = require("express");
 const symphonia = require('@tropicbliss/symphonia')
+
 const app = express();
 const serverPort: number = 3000;
 const clientPort: number = 5001;
-
-import { Server } from "socket.io";
-var ip = require("ip");
-const fs = require("fs");
-const path = require("path");
+const directory = process.cwd();
+const soundCache = new SoundCache();
+const io = new Server(serverPort, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST", "OPTIONS"],
+  },
+});
 
 let clientDirectory: string = "";
-
-const directory = process.cwd();
 
 if (process.pkg) {
   // runtime is compiled with pkg
@@ -22,25 +29,19 @@ if (process.pkg) {
   clientDirectory = "../soundboard-client/dist";
 }
 
-const io = new Server(serverPort, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST", "OPTIONS"],
-  },
-});
-
 console.log(`soundboard listener is listening on port ${serverPort}`);
 
+const soundManifest = JSON.parse(
+  fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
+);
+
+soundCache.populate(soundManifest.sounds, directory);
+
 io.on("connection", (socket) => {
-  const soundManifest = JSON.parse(
-    fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
-  );
   socket.emit("get-sounds", soundManifest.sounds);
   socket.on("play-sound", async (requestedSound) => {
     const soundObject = JSON.parse(requestedSound);
-    const filePath = path.join(directory, `/media/${soundObject.name}.mp3`);
-    const buf = fs.readFileSync(filePath) // Gets a Buffer
-    symphonia.playFromBuf(buf, { speed: 1.0, volume: 1.0, isBlocking: false })
+    symphonia.playFromBuf(soundCache.getCachedSoundByKey(soundObject.name, directory), { speed: 1.0, volume: 1.0, isBlocking: false })
   });
 });
 
