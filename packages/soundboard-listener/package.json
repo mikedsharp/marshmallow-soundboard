@@ -9,8 +9,9 @@
     "start-and-build-client": "npm run build --workspace=soundboard-client && npm start",
     "start": "ts-node src/main.ts",
     "build-manifest": "ts-node src/build-manifest.ts",
-    "build-server:windows": "tsc src/main.ts --outDir dist && pkg dist/main.js -o ../../dist/soundboard-listener.exe",
-    "build-server:mac": "tsc src/main.ts --outDir dist && pkg dist/main.js  -o ../../dist/soundboard-listener",
+    "build-server": "tsc --build ./tsconfig.json",
+    "build-server:windows": "npm run build-server && pkg dist/main.js -o ../../dist/soundboard-listener.exe",
+    "build-server:mac": "npm run build-server && pkg dist/main.js  -o ../../dist/soundboard-listener",
     "build-manifest-builder:windows": "tsc src/build-manifest.ts --outDir dist && pkg dist/build-manifest.js  -o ../../dist/build-manifest.exe",
     "build-manifest-builder:mac": "tsc src/build-manifest.ts --outDir dist && pkg dist/build-manifest.js  -o ../../dist/build-manifest"
   },
