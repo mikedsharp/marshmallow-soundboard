@@ -61,6 +61,7 @@ if (fs.existsSync(path.join(clientDirectory, `/index.html`))) {
       port: clientPort,
     })
   );
+  app.use(express.static(path.join(directory, 'media/thumbs')));
   app.listen(clientPort);
   console.log(
     `soundboard client is hosted at: http://${ip.address()}:${clientPort}`
@@ -70,3 +71,4 @@ if (fs.existsSync(path.join(clientDirectory, `/index.html`))) {
     `No build of soundboard client found, please run soundboard-client separately (adding VITE_SOUND_SERVER_ADDRESS=ws://${ip.address()}:${serverPort} to the clients .env file)  or run a build and then restart this process.`
   );
 }
+

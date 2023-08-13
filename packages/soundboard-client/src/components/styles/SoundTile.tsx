@@ -8,11 +8,17 @@ export const StyledSoundTile = styled.div`
   aspect-ratio: 1/1;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   border-radius: 6%;
   transition: all 0.3s ease;
   box-shadow: 0 9px #999;
   filter: contrast(70%);
   cursor: pointer;
+
+  img {
+    width: 64px;
+    height: 64px;
+  }
 
   span {
     font-weight: bold;
