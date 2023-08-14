@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { socket } from "./socket";
 import SoundBoardGrid from "./components/SoundBoardGrid";
 import { StyledApp } from "./components/styles/App";
+import PaginationControls from "./components/PaginationControls";
 
 function useGridSize() {
   const [size, setSize] = useState([0, 0]);
@@ -67,22 +68,13 @@ function App() {
             socket.emit("play-sound", JSON.stringify(sound));
           }, [])}
         />
-        <div>
-          <button
-            disabled={currentPageIndex === 0}
-            onClick={() => setCurrentPageIndex(currentPageIndex - 1)}
-            type="button"
-          >
-            Previous page
-          </button>
-          <button
-            disabled={currentPageIndex === totalPageCount - 1}
-            onClick={() => setCurrentPageIndex(currentPageIndex + 1)}
-            type="button"
-          >
-            Next page
-          </button>
-        </div>
+        <PaginationControls onPreviousPage={() => {
+          setCurrentPageIndex(currentPageIndex - 1)
+        }} onNextPage={() => {
+          setCurrentPageIndex(currentPageIndex + 1)
+        }} 
+        totalPageCount={totalPageCount}
+        currentPageIndex={currentPageIndex} />
       </StyledApp>
     </>
   );
