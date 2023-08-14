@@ -13,8 +13,11 @@ function SoundTile(props: any) {
       onClick={() => props.onTileClick(props.sound)}
       color={props.sound.color}
     >
-      {!imageHasError && props.sound.image && <img src={`./${props.sound.image}`}  onError={onImageError}/>}
-      {props.sound.label && <span>{props.sound.label}</span>}
+      <div className="button">
+        {!imageHasError && props.sound.image && <img  draggable="false" src={`./${props.sound.image}`} onError={onImageError} />}
+        {props.sound.label && <span>{props.sound.label}</span>}
+      </div>
+
     </StyledSoundTile>
   );
 }
