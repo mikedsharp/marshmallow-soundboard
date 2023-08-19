@@ -39,7 +39,6 @@ let soundManifest = JSON.parse(
 soundCache.populate(soundManifest.sounds, directory);
 
 chokidar.watch(path.join(directory, '/media/*.mp3'), {ignoreInitial: true}).on('add', (soundPath: string) => {
-  console.log( `File ${path} has been added`);
   soundManifest = JSON.parse(
     fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
   );
