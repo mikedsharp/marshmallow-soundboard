@@ -39,12 +39,13 @@ let soundManifest = JSON.parse(
 soundCache.populate(soundManifest.sounds, directory);
 
 chokidar.watch(path.join(directory, '/media/*.mp3'), {ignoreInitial: true}).on('add', (soundPath: string) => {
+  const slashCharacter = soundPath.indexOf('\\') > -1 ? '\\' : '/';
   soundManifest = JSON.parse(
     fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
   );
   soundManifest.sounds.push({
-    name: soundPath.substring(soundPath.lastIndexOf('/') + 1, soundPath.lastIndexOf('.')),
-    label: soundPath.substring(soundPath.lastIndexOf('/') + 1, soundPath.lastIndexOf('.')),
+    name: soundPath.substring(soundPath.lastIndexOf(slashCharacter) + 1, soundPath.lastIndexOf('.')),
+    label: soundPath.substring(soundPath.lastIndexOf(slashCharacter) + 1, soundPath.lastIndexOf('.')),
     color: '#f77'
   });
   fs.writeFileSync(path.join(directory, '/media/sound-manifest.json'), JSON.stringify(soundManifest));
