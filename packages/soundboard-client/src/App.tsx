@@ -3,21 +3,7 @@ import { socket } from "./socket";
 import SoundBoardGrid from "./components/SoundBoardGrid";
 import { StyledApp } from "./components/styles/App";
 import PaginationControls from "./components/PaginationControls";
-
-function useGridSize() {
-  const [size, setSize] = useState([0, 0]);
-  useEffect(() => {
-    function updateSize() {
-      const grid: any = document.getElementById("root");
-      setSize([grid.offsetWidth - 50, grid.offsetHeight - 50]);
-    }
-    window.addEventListener("resize", updateSize);
-
-    updateSize();
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
-  return size;
-}
+import { useGridSize } from "./hooks/useGridSize";
 
 function App() {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
