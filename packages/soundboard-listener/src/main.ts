@@ -50,6 +50,16 @@ chokidar.watch(path.join(directory, '/media/*.mp3'), {ignoreInitial: true}).on('
   fs.writeFileSync(path.join(directory, '/media/sound-manifest.json'), JSON.stringify(soundManifest));
 });
 
+chokidar.watch(path.join(directory, '/media/*.mp3'), {ignoreInitial: true}).on('unlink', (soundPath: string) => {
+  soundManifest = JSON.parse(
+    fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
+  );
+  soundManifest.sounds.splice(soundManifest.sounds.findIndex((sound:any) => {
+    return sound.name === soundPath.substring(soundPath.lastIndexOf('/') + 1, soundPath.lastIndexOf('.'));
+  }), 1);
+  fs.writeFileSync(path.join(directory, '/media/sound-manifest.json'), JSON.stringify(soundManifest));
+});
+
 fs.watchFile(path.join(directory, '/media/sound-manifest.json'), (curr:any, previous:any) =>{
   soundManifest = JSON.parse(
     fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
