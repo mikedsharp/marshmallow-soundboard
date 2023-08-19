@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require("path");
 const express = require("express");
 const symphonia = require('@tropicbliss/symphonia');
-var qrcode = require('qrcode-terminal');
+const qrcode = require('qrcode-terminal');
 
 const app = express();
 const serverPort: number = 3000;
