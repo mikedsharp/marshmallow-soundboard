@@ -5,7 +5,8 @@ const ip = require("ip");
 const fs = require('fs');
 const path = require("path");
 const express = require("express");
-const symphonia = require('@tropicbliss/symphonia')
+const symphonia = require('@tropicbliss/symphonia');
+var qrcode = require('qrcode-terminal');
 
 const app = express();
 const serverPort: number = 3000;
@@ -65,6 +66,9 @@ if (fs.existsSync(path.join(clientDirectory, `/index.html`))) {
   console.log(
     `soundboard client is hosted at: http://${ip.address()}:${clientPort}`
   );
+  console.log(`you can also scan the QR if you don't like typing...`);
+  qrcode.generate(`http://${ip.address()}:${clientPort}`, {small: true});
+
 } else {
   console.log(
     `No build of soundboard client found, please run soundboard-client separately (adding VITE_SOUND_SERVER_ADDRESS=ws://${ip.address()}:${serverPort} to the clients .env file)  or run a build and then restart this process.`
