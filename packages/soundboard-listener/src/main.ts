@@ -52,11 +52,12 @@ chokidar.watch(path.join(directory, '/media/*.mp3'), {ignoreInitial: true}).on('
 });
 
 chokidar.watch(path.join(directory, '/media/*.mp3'), {ignoreInitial: true}).on('unlink', (soundPath: string) => {
+  const slashCharacter = soundPath.indexOf('\\') > -1 ? '\\' : '/';
   soundManifest = JSON.parse(
     fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
   );
   soundManifest.sounds.splice(soundManifest.sounds.findIndex((sound:any) => {
-    return sound.name === soundPath.substring(soundPath.lastIndexOf('/') + 1, soundPath.lastIndexOf('.'));
+    return sound.name === soundPath.substring(soundPath.lastIndexOf(slashCharacter) + 1, soundPath.lastIndexOf('.'));
   }), 1);
   fs.writeFileSync(path.join(directory, '/media/sound-manifest.json'), JSON.stringify(soundManifest));
 });
