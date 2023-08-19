@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require("path");
 const express = require("express");
 const symphonia = require('@tropicbliss/symphonia')
+const chokidar = require('chokidar');
 
 const app = express();
 const serverPort: number = 3000;
@@ -31,11 +32,32 @@ if (process.pkg) {
 
 console.log(`soundboard listener is listening on port ${serverPort}`);
 
-const soundManifest = JSON.parse(
+let soundManifest = JSON.parse(
   fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
 );
 
 soundCache.populate(soundManifest.sounds, directory);
+
+chokidar.watch(path.join(directory, '/media/*.mp3'), {ignoreInitial: true}).on('add', (soundPath: string) => {
+  console.log( `File ${path} has been added`);
+  soundManifest = JSON.parse(
+    fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
+  );
+  soundManifest.sounds.push({
+    name: soundPath.substring(soundPath.lastIndexOf('/') + 1, soundPath.lastIndexOf('.')),
+    label: soundPath.substring(soundPath.lastIndexOf('/') + 1, soundPath.lastIndexOf('.')),
+    color: '#f77'
+  });
+  fs.writeFileSync(path.join(directory, '/media/sound-manifest.json'), JSON.stringify(soundManifest));
+});
+
+fs.watchFile(path.join(directory, '/media/sound-manifest.json'), (curr:any, previous:any) =>{
+  soundManifest = JSON.parse(
+    fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
+  );
+  soundCache.populate(soundManifest.sounds, directory);
+  io.emit("get-sounds", soundManifest.sounds);
+})
 
 io.on("connection", (socket) => {
   socket.emit("get-sounds", soundManifest.sounds);
