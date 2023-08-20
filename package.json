@@ -4,8 +4,9 @@
   "description": "",
   "main": ".eslintrc.js",
   "scripts": {
-    "build:windows": "npm run build:project-root --workspace=soundboard-client && npm run build-server:windows --workspace=soundboard-listener && npm run build-manifest-builder:windows --workspace=soundboard-listener && xcopy /e/h/y/q \"packages/soundboard-listener/media\" \"./dist/media\\\" > nul 2>&1 ",
-    "build:mac": "npm run build:project-root --workspace=soundboard-client && npm run build-server:mac --workspace=soundboard-listener && npm run build-manifest-builder:mac --workspace=soundboard-listener && cp -R ./packages/soundboard-listener/media ./dist"
+    "build:windows": "npm run build:project-root --workspace=soundboard-client && npm run build-server:windows --workspace=soundboard-listener && npm run build-manifest --workspace=soundboard-listener && npm run build-manifest-builder:windows --workspace=soundboard-listener && xcopy /e/h/y/q \"packages/soundboard-listener/media\" \"./dist/media\\\" > nul 2>&1 ",
+    "build:mac": "npm run build:project-root --workspace=soundboard-client && npm run build-server:mac --workspace=soundboard-listener && npm run build-manifest --workspace=soundboard-listener && npm run build-manifest-builder:mac --workspace=soundboard-listener && cp -R ./packages/soundboard-listener/media ./dist",
+    "build:linux": "npm run build:project-root --workspace=soundboard-client && npm run build-server:linux --workspace=soundboard-listener && npm run build-manifest --workspace=soundboard-listener && npm run build-manifest-builder:linux --workspace=soundboard-listener && cp -R ./packages/soundboard-listener/media ./dist"
   },
   "author": "",
   "license": "ISC",
