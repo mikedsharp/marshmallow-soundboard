@@ -76,6 +76,9 @@ io.on("connection", (socket) => {
     const soundObject = JSON.parse(requestedSound);
     symphonia.playFromBuf(soundCache.getCachedSoundByKey(soundObject.name, directory), { speed: 1.0, volume: 1.0, isBlocking: false })
   });
+  socket.on("request-sounds", () =>{
+    socket.emit("get-sounds", soundManifest.sounds);
+  })
 });
 
 if (fs.existsSync(path.join(clientDirectory, `/index.html`))) {
