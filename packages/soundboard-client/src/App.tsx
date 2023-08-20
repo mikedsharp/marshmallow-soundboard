@@ -21,13 +21,21 @@ function useGridSize() {
 function App() {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [sounds, setSounds] = useState<any[]>([]);
+  const [fetchedInitialSounds, setFetchedInitialSounds] = useState<boolean>(false);
 
   function onGetSounds(newSounds: any[]) {
     setSounds(newSounds);
+    setFetchedInitialSounds(true);
   }
 
   useEffect(() => {
     socket.on("get-sounds", onGetSounds);
+    // Safari desktop doesn't return initial sounds on load, so this requests them again
+    setTimeout(() => {
+      if(!fetchedInitialSounds) {
+        socket.emit('request-sounds');
+      }
+    }, 500)
     return () => {
       socket.off("get-sounds");
     };
