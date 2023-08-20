@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require("path");
 const express = require("express");
 const symphonia = require('@tropicbliss/symphonia')
+const chokidar = require('chokidar');
 
 const app = express();
 const serverPort: number = 3000;
@@ -31,11 +32,43 @@ if (process.pkg) {
 
 console.log(`soundboard listener is listening on port ${serverPort}`);
 
-const soundManifest = JSON.parse(
+let soundManifest = JSON.parse(
   fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
 );
 
 soundCache.populate(soundManifest.sounds, directory);
+
+chokidar.watch(path.join(directory, '/media/*.mp3'), {ignoreInitial: true}).on('add', (soundPath: string) => {
+  const slashCharacter = soundPath.indexOf('\\') > -1 ? '\\' : '/';
+  soundManifest = JSON.parse(
+    fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
+  );
+  soundManifest.sounds.push({
+    name: soundPath.substring(soundPath.lastIndexOf(slashCharacter) + 1, soundPath.lastIndexOf('.')),
+    label: soundPath.substring(soundPath.lastIndexOf(slashCharacter) + 1, soundPath.lastIndexOf('.')),
+    color: '#f77'
+  });
+  fs.writeFileSync(path.join(directory, '/media/sound-manifest.json'), JSON.stringify(soundManifest));
+});
+
+chokidar.watch(path.join(directory, '/media/*.mp3'), {ignoreInitial: true}).on('unlink', (soundPath: string) => {
+  const slashCharacter = soundPath.indexOf('\\') > -1 ? '\\' : '/';
+  soundManifest = JSON.parse(
+    fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
+  );
+  soundManifest.sounds.splice(soundManifest.sounds.findIndex((sound:any) => {
+    return sound.name === soundPath.substring(soundPath.lastIndexOf(slashCharacter) + 1, soundPath.lastIndexOf('.'));
+  }), 1);
+  fs.writeFileSync(path.join(directory, '/media/sound-manifest.json'), JSON.stringify(soundManifest));
+});
+
+fs.watchFile(path.join(directory, '/media/sound-manifest.json'), (curr:any, previous:any) =>{
+  soundManifest = JSON.parse(
+    fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
+  );
+  soundCache.populate(soundManifest.sounds, directory);
+  io.emit("get-sounds", soundManifest.sounds);
+})
 
 io.on("connection", (socket) => {
   socket.emit("get-sounds", soundManifest.sounds);
@@ -43,6 +76,9 @@ io.on("connection", (socket) => {
     const soundObject = JSON.parse(requestedSound);
     symphonia.playFromBuf(soundCache.getCachedSoundByKey(soundObject.name, directory), { speed: 1.0, volume: 1.0, isBlocking: false })
   });
+  socket.on("request-sounds", () =>{
+    socket.emit("get-sounds", soundManifest.sounds);
+  })
 });
 
 if (fs.existsSync(path.join(clientDirectory, `/index.html`))) {
