@@ -35,7 +35,7 @@ function App() {
       if(!fetchedInitialSounds) {
         socket.emit('request-sounds');
       }
-    }, 5000)
+    }, 500)
     return () => {
       socket.off("get-sounds");
     };
