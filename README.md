@@ -14,5 +14,5 @@ Once you've unzipped the release, here's how to get started:
 6. On the computer running the `soundboard-listener` app, grab some MP3 files and drop them into the `media` folder that came as part of the unzipped folder, you can drag sounds in and out of the `media` folder and the soundboard will automatically update.
 7. You're all set up to use the soundboard, there are more customisation options, but this should get you started. Have fun!
 
-## for people who want to modify the soundboard or run from source
+## For people who want to modify the soundboard or run from source
 I'll write this up soon...
