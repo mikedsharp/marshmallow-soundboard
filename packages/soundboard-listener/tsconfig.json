@@ -5,6 +5,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "types": ["node", "./global.d.ts"],
+    "lib": ["ESNext"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]
