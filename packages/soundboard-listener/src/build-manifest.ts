@@ -13,6 +13,15 @@ const isValidFileFormat = (extension: string): boolean => {
   return allowedMediaFormats.includes(extension);
 };
 
+const hasNoExistingRecord = (sound: any): boolean => {
+  const matchingSounds = soundEntries.filter((soundEntry) => {
+    return (
+      soundEntry.name === sound.name && soundEntry.format === soundEntry.format
+    );
+  });
+  return matchingSounds.length === 0;
+};
+
 if (!fs.existsSync(path.join(directory, `/media/sound-manifest.json`))) {
   fs.writeFileSync(
     path.join(directory, `/media/sound-manifest.json`),
@@ -20,18 +29,24 @@ if (!fs.existsSync(path.join(directory, `/media/sound-manifest.json`))) {
       sounds: [],
     })
   );
+} else {
+  const manifestFile = JSON.parse(
+    fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
+  );
+  soundEntries.push(...manifestFile.sounds);
 }
 
 fs.readdirSync(path.join(directory, `/media/`)).forEach((file: any) => {
   const filenameParts = file.split(".");
   const extension = filenameParts[filenameParts.length - 1];
-  if (isValidFileFormat(extension)) {
-    soundEntries.push({
-      name: filenameParts.slice(0, filenameParts.length - 1).join("."),
-      format: extension,
-      label: filenameParts.slice(0, filenameParts.length - 1).join("."),
-      color: "#777",
-    });
+  const newSound = {
+    name: filenameParts.slice(0, filenameParts.length - 1).join("."),
+    format: extension,
+    label: filenameParts.slice(0, filenameParts.length - 1).join("."),
+    color: "#777",
+  };
+  if (isValidFileFormat(extension) && hasNoExistingRecord(newSound)) {
+    soundEntries.push(newSound);
   }
 });
 console.log(JSON.stringify({ sounds: soundEntries }));
