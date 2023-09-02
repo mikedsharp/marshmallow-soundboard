@@ -12,6 +12,7 @@ const chokidar = require('chokidar');
 const app = express();
 const serverPort: number = 3000;
 const clientPort: number = 5001;
+const thumbPort: number = 5002;
 const directory = process.cwd();
 const soundCache = new SoundCache();
 const io = new Server(serverPort, {
@@ -98,7 +99,9 @@ if (fs.existsSync(path.join(clientDirectory, `/index.html`))) {
       port: clientPort,
     })
   );
+  app.use(express.static(path.join(directory, 'media/thumbs')));
   app.listen(clientPort);
+  app.listen(thumbPort);
   console.log(
     `soundboard client is hosted at: http://${ip.address()}:${clientPort}`
   );
@@ -106,7 +109,10 @@ if (fs.existsSync(path.join(clientDirectory, `/index.html`))) {
   qrcode.generate(`http://${ip.address()}:${clientPort}`, {small: true});
 
 } else {
+  app.use(express.static(path.join(directory, 'media/thumbs')));
+  app.listen(thumbPort);
   console.log(
     `No build of soundboard client found, please run soundboard-client separately (adding VITE_SOUND_SERVER_ADDRESS=ws://${ip.address()}:${serverPort} to the clients .env file)  or run a build and then restart this process.`
   );
 }
+

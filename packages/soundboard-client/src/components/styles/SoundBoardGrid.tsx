@@ -6,6 +6,7 @@ export const StyledSoundBoardGrid = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   box-sizing: border-box;
-  column-gap: 5px;
-  row-gap: 5px;
+  column-gap: 10px;
+  row-gap: 20px;
+  padding-bottom: 20px;
 `;
