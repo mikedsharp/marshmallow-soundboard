@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import { SoundCache } from "./SoundCache";
 import { allowedMediaFormats } from "./soundFormats";
+import { buildManifest } from "./build-manifest";
 
 const ip = require("ip");
 const fs = require("fs");
@@ -22,6 +23,9 @@ const io = new Server(serverPort, {
     methods: ["GET", "POST", "OPTIONS"],
   },
 });
+
+buildManifest();
+
 const mediaFileGlob = `/media/*.(${allowedMediaFormats.join("|")})`;
 
 let clientDirectory: string = "";
