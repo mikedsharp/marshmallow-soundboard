@@ -1,23 +1,35 @@
+import { allowedMediaFormats } from "./soundFormats";
 const fs = require("fs");
 const path = require("path");
 
 console.log("building manifest...");
 
-const soundEntries: { name: any; label: any; color: string }[] = [];
+const soundEntries: { name: any; format: any; label: any; color: string }[] =
+  [];
 
 const directory = process.cwd();
 
-if(!fs.existsSync(path.join(directory, `/media/sound-manifest.json`))) {
-  fs.writeFileSync(path.join(directory, `/media/sound-manifest.json`), JSON.stringify({
-    sounds: []
-  }));
+const isValidFileFormat = (extension: string): boolean => {
+  return allowedMediaFormats.includes(extension);
+};
+
+if (!fs.existsSync(path.join(directory, `/media/sound-manifest.json`))) {
+  fs.writeFileSync(
+    path.join(directory, `/media/sound-manifest.json`),
+    JSON.stringify({
+      sounds: [],
+    })
+  );
 }
 
 fs.readdirSync(path.join(directory, `/media/`)).forEach((file: any) => {
-  if (file.indexOf(".mp3") > -1) {
+  const filenameParts = file.split(".");
+  const extension = filenameParts[filenameParts.length - 1];
+  if (isValidFileFormat(extension)) {
     soundEntries.push({
-      name: file.split(".")[0],
-      label: file.split(".")[0],
+      name: filenameParts.slice(0, filenameParts.length - 1).join("."),
+      format: extension,
+      label: filenameParts.slice(0, filenameParts.length - 1).join("."),
       color: "#777",
     });
   }
