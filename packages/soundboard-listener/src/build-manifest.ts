@@ -1,3 +1,4 @@
+import { allowedMediaFormats } from "./soundFormats";
 const fs = require("fs");
 const path = require("path");
 
@@ -5,12 +6,11 @@ console.log("building manifest...");
 
 const soundEntries: { name: any; format: any; label: any; color: string }[] =
   [];
-const allowedExtensions = ["wav", "mp3", "ogg", "mp4", "flac"];
 
 const directory = process.cwd();
 
 const isValidFileFormat = (extension: string): boolean => {
-  return allowedExtensions.includes(extension);
+  return allowedMediaFormats.includes(extension);
 };
 
 if (!fs.existsSync(path.join(directory, `/media/sound-manifest.json`))) {

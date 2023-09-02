@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import { SoundCache } from "./SoundCache";
+import { allowedMediaFormats } from "./soundFormats";
 
 const ip = require("ip");
 const fs = require("fs");
@@ -21,6 +22,7 @@ const io = new Server(serverPort, {
     methods: ["GET", "POST", "OPTIONS"],
   },
 });
+const mediaFileGlob = `/media/*.(${allowedMediaFormats.join("|")})`;
 
 let clientDirectory: string = "";
 
@@ -41,7 +43,7 @@ let soundManifest = JSON.parse(
 soundCache.populate(soundManifest.sounds, directory);
 
 chokidar
-  .watch(path.join(directory, "/media/*.(wav|mp3|ogg|mp4|flac)"), {
+  .watch(path.join(directory, mediaFileGlob), {
     ignoreInitial: true,
   })
   .on("add", (soundPath: string) => {
@@ -68,7 +70,7 @@ chokidar
   });
 
 chokidar
-  .watch(path.join(directory, "/media/*.(wav|mp3|ogg|mp4|flac)"), {
+  .watch(path.join(directory, mediaFileGlob), {
     ignoreInitial: true,
   })
   .on("unlink", (soundPath: string) => {
