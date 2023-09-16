@@ -2,6 +2,10 @@
 
 An all-purpose cross-platform customizable soundboard, written in Node.js.
 
+## Why Marshmallow?
+
+When I wrote the animation for when you push the sound buttons, I made it squishy like a marshmallow.
+
 ## For people who just want to run the soundboard
 
 Please check out the [Releases](https://github.com/mikedsharp/soundboard/releases) page. You can download the executable for your platform (Windows, Linux, MacOS are all supported!)
