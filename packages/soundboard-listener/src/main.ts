@@ -65,7 +65,7 @@ chokidar
         soundPath.lastIndexOf(".")
       ),
       format: soundPath.substring(soundPath.lastIndexOf(".") + 1),
-      color: "#f77",
+      color: "#777",
     });
     fs.writeFileSync(
       path.join(directory, "/media/sound-manifest.json"),

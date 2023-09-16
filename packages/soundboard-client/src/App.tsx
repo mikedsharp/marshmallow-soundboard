@@ -8,7 +8,8 @@ import { useGridSize } from "./hooks/useGridSize";
 function App() {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [sounds, setSounds] = useState<any[]>([]);
-  const [fetchedInitialSounds, setFetchedInitialSounds] = useState<boolean>(false);
+  const [fetchedInitialSounds, setFetchedInitialSounds] =
+    useState<boolean>(false);
 
   function onGetSounds(newSounds: any[]) {
     setSounds(newSounds);
@@ -19,10 +20,10 @@ function App() {
     socket.on("get-sounds", onGetSounds);
     // Safari desktop doesn't return initial sounds on load, so this requests them again
     setTimeout(() => {
-      if(!fetchedInitialSounds) {
-        socket.emit('request-sounds');
+      if (!fetchedInitialSounds) {
+        socket.emit("request-sounds");
       }
-    }, 500)
+    }, 500);
     return () => {
       socket.off("get-sounds");
     };
@@ -56,19 +57,26 @@ function App() {
   return (
     <>
       <StyledApp>
-        <SoundBoardGrid
-          sounds={page}
-          onPlaySound={useCallback((sound: any) => {
-            socket.emit("play-sound", JSON.stringify(sound));
-          }, [])}
+        <h1>Marshmallow soundboard</h1>
+        <h2>Make some noise!</h2>
+        <div style={{ display: "flex", flex: 1 }}>
+          <SoundBoardGrid
+            sounds={page}
+            onPlaySound={useCallback((sound: any) => {
+              socket.emit("play-sound", JSON.stringify(sound));
+            }, [])}
+          />
+        </div>
+        <PaginationControls
+          onPreviousPage={() => {
+            setCurrentPageIndex(currentPageIndex - 1);
+          }}
+          onNextPage={() => {
+            setCurrentPageIndex(currentPageIndex + 1);
+          }}
+          totalPageCount={totalPageCount}
+          currentPageIndex={currentPageIndex}
         />
-        <PaginationControls onPreviousPage={() => {
-          setCurrentPageIndex(currentPageIndex - 1)
-        }} onNextPage={() => {
-          setCurrentPageIndex(currentPageIndex + 1)
-        }} 
-        totalPageCount={totalPageCount}
-        currentPageIndex={currentPageIndex} />
       </StyledApp>
     </>
   );

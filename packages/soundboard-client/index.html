@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" style="touch-action: none; padding: 0; margin: 0; background-color: black; overflow: hidden">
+<html
+  lang="en"
+  style="touch-action: none; padding: 0; margin: 0; overflow: hidden"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="user-scalable=no" />
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="viewport" content="user-scalable=no" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Permanent+Marker&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Erica+One&display=swap");
+    </style>
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Permanent+Marker&display=swap');
-  </style>
+    <title>Soundboard</title>
+    <script type="text/javascript" src="./server-address.js"></script>
+  </head>
 
-
-  <title>Soundboard</title>
-  <script type="text/javascript" src="./server-address.js"></script>
-</head>
-
-<body style="touch-action: none;">
-  <div style="
-        height: 95dvh;
-        width: 90dvw;
+  <body style="touch-action: none; margin: 0">
+    <div
+      style="
+        height: 100dvh;
+        width: 100dvw;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: black;
         padding: 0;
-        margin: 0 auto;
+        margin: 0;
         overflow: hidden;
-      " id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+      "
+      id="root"
+    ></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

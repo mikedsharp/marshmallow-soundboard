@@ -39,7 +39,7 @@ export const StyledSoundTile = styled.div`
     -webkit-touch-callout: none;
     -ms-text-size-adjust: none;
     -webkit-text-size-adjust: none;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
   span {
@@ -48,10 +48,9 @@ export const StyledSoundTile = styled.div`
     background-color: white;
     padding: 4px 2px;
     transition: all 0.3 ease;
-    font-family: 'Permanent Marker';
+    font-family: "Permanent Marker";
     width: 100%;
     box-sizing: border-box;
-    border-radius: 6%;
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -65,8 +64,6 @@ export const StyledSoundTile = styled.div`
     -webkit-touch-callout: none;
     -ms-text-size-adjust: none;
     -webkit-text-size-adjust: none;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
-
-
 `;
