@@ -18,6 +18,10 @@ Once you've unzipped the release, here's how to get started:
 
 ### running the soundboard
 
+NOTE: In Windows and MacOS, the OS Will block the app from runnning, and you'll need to allow the application, instructions for each OS below:
+- MacOS - Go to https://support.apple.com/en-gb/HT202491#:~:text=In%20System%20Preferences%2C%20click%20Security,%E2%80%9CAllow%20apps%20downloaded%20from%E2%80%9D and read the instructions in the "If you want to open an app that hasn’t been notarised or is from an unidentified developer" section
+- Windows - A Microsoft SmartScreen window will appear, click "more info", then click the "run anyway" button that appears, the app should now run.
+
 1. On the computer you want the sounds to play from, run the `soundboard-listener` executable (either by double-clicking it from Explorer/Finder etc or by running from the command line in your OS terminal app). This will start a server that will provide the soundboard web app to whatever handheld device you want to use the soundboard
 2. The very first time you run the soundboard, you may get a message box from your OS asking if you'd like to allow the app to run on your local network, you need to allow this so that the soundboard is available on your local network, so select "allow" or "yes", so that the soundboard is available on your local network.
 3. Follow the on-screen instructions that show up in the command prompt/terminal window that appeared when you ran the app. The instructions should give you what you need to connect the touch device you want to use to control the soundboard with to the soundboard listener app
