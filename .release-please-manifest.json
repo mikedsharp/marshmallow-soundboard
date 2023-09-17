@@ -1,4 +1,4 @@
 {
-  "packages/soundboard-listener": "0.0.0",
-  "packages/soundboard-client": "0.0.0"
+  "packages/soundboard-listener": "0.1.0",
+  "packages/soundboard-client": "0.1.0"
 }

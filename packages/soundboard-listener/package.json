@@ -1,6 +1,6 @@
 {
   "name": "soundboard-listener",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "socket.io listener app to pick up soundboard events and play sound on local machine.",
   "main": "index.js",
   "scripts": {
