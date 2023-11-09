@@ -12,11 +12,17 @@ const symphonia = require("@tropicbliss/symphonia");
 const chokidar = require("chokidar");
 
 const app = express();
-const serverPort: number = 3000;
-const clientPort: number = 5001;
-const thumbPort: number = 5002;
 const directory = process.cwd();
 const soundCache = new SoundCache();
+
+let serverConfig = {
+  ...JSON.parse(fs.readFileSync(path.join(directory, `server-config.json`))),
+};
+
+const serverPort: number = serverConfig.serverPort;
+const clientPort: number = serverConfig.clientPort;
+const thumbPort: number = serverConfig.thumbnailPort;
+
 const io = new Server(serverPort, {
   cors: {
     origin: "*",
@@ -37,8 +43,6 @@ if (process.pkg) {
   // runtime is not compiled with pkg
   clientDirectory = "../soundboard-client/dist";
 }
-
-console.log(`soundboard listener is listening on port ${serverPort}`);
 
 let soundManifest = JSON.parse(
   fs.readFileSync(path.join(directory, `/media/sound-manifest.json`))
