@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/mikedsharp/marshmallow-soundboard/compare/marshmallow-soundboard-v0.1.0...marshmallow-soundboard-v0.1.1) (2023-11-09)
+
+
+### Features
+
+* make the ports configurable ([04d61ec](https://github.com/mikedsharp/marshmallow-soundboard/commit/04d61ec7aef679e51b792595cf4278a30b049f4d))
+
 ## 0.1.0 (2023-09-17)
 
 
